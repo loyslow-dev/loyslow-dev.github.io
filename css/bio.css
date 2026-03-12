@@ -108,15 +108,38 @@
     font-size: 1.1rem;
 }
 
-.flag-emoji {
-    font-size: 2rem;
+/* ===== FLAG — SVG instead of emoji ===== */
+.flag-icon {
+    width: 36px;
+    height: 24px;
+    border-radius: 4px;
+    object-fit: cover;
+    flex-shrink: 0;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
     animation: flagWave 2s ease-in-out infinite;
+}
+
+/* Inline SVG flag container */
+.flag-svg-wrapper {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    animation: flagWave 2s ease-in-out infinite;
+}
+
+.flag-svg-wrapper svg {
+    width: 36px;
+    height: 24px;
+    border-radius: 4px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+    display: block;
 }
 
 @keyframes flagWave {
     0%, 100% { transform: rotate(0deg); }
-    25% { transform: rotate(5deg); }
-    75% { transform: rotate(-5deg); }
+    25% { transform: rotate(3deg); }
+    75% { transform: rotate(-3deg); }
 }
 
 .location-text {

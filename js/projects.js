@@ -8,28 +8,12 @@ const ProjectsModule = (() => {
     // ===== ADD YOUR PROJECTS HERE =====
     const PROJECTS = [
         {
-            name: 'Awesome Project',
-            role: 'Full-Stack Developer',
-            description: 'Крутой проект с использованием современных технологий. Включает backend на Node.js и frontend на React.',
-            logo: '',  // URL to logo image, leave empty for placeholder
-            emoji: '🚀', // Used if no logo
-            url: 'https://example.com'
-        },
-        {
-            name: 'Cool Bot',
-            role: 'Backend Developer',
-            description: 'Многофункциональный Discord/Telegram бот с системой модерации и развлечений.',
-            logo: '',
-            emoji: '🤖',
-            url: 'https://example.com'
-        },
-        {
-            name: 'Game Server',
+            name: 'AfricaRP',
             role: 'Developer & Admin',
             description: 'Игровой сервер с кастомными плагинами и уникальным геймплеем.',
-            logo: '',
-            emoji: '🎮',
-            url: 'https://example.com'
+            logo: 'assets/africarp.jpg',
+            emoji: '',
+            url: 'https://t.me/africarp'
         },
         // ===== ADD MORE PROJECTS BELOW =====
         // {

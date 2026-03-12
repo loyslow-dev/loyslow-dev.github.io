@@ -11,7 +11,7 @@ const BioModule = (() => {
     // Social links - EDIT THESE
     const SOCIAL_LINKS = {
         telegram: 'https://t.me/loyslow',       // ← Edit your Telegram
-        discord: 'https://discord.gg/YOUR_SERVER' // ← Edit your Discord
+        discord: 'https://discord.com/users/loyslow' // ← Edit your Discord
     };
     // ==========================
 

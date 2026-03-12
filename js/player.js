@@ -20,19 +20,13 @@ const PlayerModule = (() => {
             file: 'songs/song1.mp3',
             title: 'КРАСНАЯ ПЛЕСЕНЬ x CYBERPUNK 2077',           // Leave empty to auto-parse from filename
             artist: 'ГИМН КИБЕРПАНКОВ',          // Leave empty to auto-parse from filename
-            cover: 'no-cover.jpg'            // Leave empty — will try songs/song1.png then songs/song1.jpg
+            cover: ''            // Leave empty — will try songs/song1.png then songs/song1.jpg
         },
         {
             file: 'songs/song2.mp3',
             title: 'Stranger Things Main Theme',
             artist: 'L`Orchestra Cinematique, Michael Stein, Kyle Dixon',
-            cover: 'songs/song2.png'    // Explicit cover path
-        },
-        {
-            file: 'songs/song3.mp3',
-            title: '',
-            artist: '',
-            cover: ''
+            cover: 'songs/song2.jpg'    // Explicit cover path
         },
         // ===== ADD MORE SONGS =====
         // {
