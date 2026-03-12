@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Loyslow Dev</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+
+    <!-- Генеративный космический фон -->
+    <canvas id="space-canvas"></canvas>
+    <!-- Если есть видео, оно перекроет canvas (раскомментируй в CSS если нужно) -->
+    <video muted loop id="bg-video">
+        <source src="assets/background.mp4" type="video/mp4">
+    </video>
+
+    <div class="container">
+        <div class="bento-grid">
+            
+            <!-- BIO -->
+            <div class="card bio-card" id="bio-card">
+                <div class="loader"><i class="fa-solid fa-circle-notch fa-spin"></i> Loading Bio...</div>
+            </div>
+
+            <!-- Лента технологий -->
+            <div class="card tech-card">
+                <h3>Stack</h3>
+                <div class="marquee-container">
+                    <div class="marquee" id="tech-track">
+                        <!-- Генерируется JS -->
+                    </div>
+                </div>
+            </div>
+
+            <!-- Репозитории -->
+            <div class="card repos-card">
+                <h3>GitHub Repositories</h3>
+                <div class="repos-list" id="repos-list">
+                    <div class="loader"><i class="fa-solid fa-circle-notch fa-spin"></i> Loading...</div>
+                </div>
+            </div>
+
+            <!-- Проекты -->
+            <div class="card projects-card">
+                <h3>Projects</h3>
+                <div class="projects-grid" id="projects-grid"></div>
+            </div>
+
+        </div>
+    </div>
+
+    <!-- Плеер -->
+    <div class="music-player collapsed" id="music-player">
+        <button class="toggle-player-btn" id="toggle-player">
+            <i class="fa-solid fa-chevron-up"></i>
+        </button>
+
+        <div class="mini-controls">
+            <button id="mini-play-btn"><i class="fa-solid fa-play"></i></button>
+        </div>
+
+        <div class="full-player">
+            <div class="visualizer-container">
+                <canvas id="visualizer"></canvas>
+            </div>
+            <div class="track-info">
+                <h4 id="track-name">Select Track</h4>
+                <p id="track-artist">Unknown</p>
+            </div>
+            <div class="timeline-container">
+                <span id="current-time">0:00</span>
+                <input type="range" id="seek-slider" max="100" value="0">
+                <span id="duration">0:00</span>
+            </div>
+            <div class="main-controls">
+                <button id="prev-btn"><i class="fa-solid fa-backward"></i></button>
+                <button id="play-btn" class="big-play"><i class="fa-solid fa-play"></i></button>
+                <button id="next-btn"><i class="fa-solid fa-forward"></i></button>
+            </div>
+        </div>
+    </div>
+
+    <script src="config.js"></script>
+    <script src="script.js"></script>
+</body>
+</html>
