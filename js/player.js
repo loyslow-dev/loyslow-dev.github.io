@@ -28,6 +28,12 @@ const PlayerModule = (() => {
             artist: 'L`Orchestra Cinematique, Michael Stein, Kyle Dixon',
             cover: 'songs/song2.jpg'    // Explicit cover path
         },
+        {
+            file: 'songs/song3.mp3',
+            title: 'Kids',
+            artist: 'Kyle Dixon & Michael Stein',
+            cover: 'songs/song3.jpg'    // Explicit cover path
+        },
         // ===== ADD MORE SONGS =====
         // {
         //     file: 'songs/mysong.mp3',
