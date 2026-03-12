@@ -16,21 +16,23 @@ function initOverlayAndPlayer() {
     const overlay = document.getElementById('overlay');
     const container = document.querySelector('.container');
     
-    // Инициализируем плеер, но не запускаем
+    // Инициализируем плеер (получаем управление)
     const playerControls = initMusicPlayerControls(); 
 
     // Клик по оверлею = Вход на сайт
     overlay.addEventListener('click', () => {
-        // 1. Скрываем оверлей
+        // 1. Плавно скрываем оверлей
         overlay.style.opacity = '0';
+        
+        // 2. Плавно показываем сайт
+        container.classList.add('visible');
+
+        // 3. Убираем оверлей полностью через 0.8 сек (время анимации)
         setTimeout(() => {
             overlay.style.display = 'none';
-            // 2. Показываем контент плавно
-            container.style.opacity = '1';
-            container.style.transform = 'translateY(0)';
         }, 800);
 
-        // 3. Запускаем музыку (теперь браузер разрешит, т.к. был клик)
+        // 4. Запускаем музыку (теперь браузер разрешит)
         if (playerControls) {
             playerControls.play();
         }
