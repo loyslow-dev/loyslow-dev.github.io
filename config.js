@@ -50,6 +50,6 @@ const CONFIG = {
     // 6. Плейлист
     playlist: [
         // Файлы должны лежать в папке songs/
-        { filename: "song1.mp3", title: "Track Title", artist: "Artist" },
+        { filename: "song1.mp3", title: "Track", artist: "Artist" },
     ]
 };
