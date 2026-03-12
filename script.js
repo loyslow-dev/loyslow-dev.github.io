@@ -79,9 +79,22 @@ function initSpaceBackground() {
 async function loadBio() {
     const bioCard = document.getElementById('bio-card');
     
+    // Проверка, загрузился ли конфиг
+    if (typeof CONFIG === 'undefined') {
+        bioCard.innerHTML = `<p style="color:red">Error: config.js is broken!</p>`;
+        return;
+    }
+
     try {
         const response = await fetch(`https://api.github.com/users/${CONFIG.githubUsername}`);
-        if(!response.ok) throw new Error("GitHub API Error");
+        
+        if (response.status === 404) {
+             throw new Error("User not found");
+        }
+        if (!response.ok) {
+             throw new Error("GitHub API Error");
+        }
+
         const data = await response.json();
 
         bioCard.innerHTML = `
@@ -98,9 +111,11 @@ async function loadBio() {
     } catch (error) {
         console.error(error);
         bioCard.innerHTML = `
-            <i class="fa-solid fa-triangle-exclamation" style="font-size:3rem; color: #ff4444; margin-bottom:10px;"></i>
-            <h3>Connection Failed</h3>
-            <p>Run via Local Server</p>
+            <div style="text-align:center; color: #ff5555;">
+                <i class="fa-solid fa-circle-exclamation" style="font-size: 2rem; margin-bottom:10px;"></i>
+                <p>GitHub Error: ${error.message}</p>
+                <p style="font-size:0.8rem; color:#888;">Check username in config.js</p>
+            </div>
         `;
     }
 }
