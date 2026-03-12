@@ -69,14 +69,18 @@ body {
 @keyframes spin { to { transform: rotate(360deg); } }
 @keyframes pulse { 0%, 100% { opacity: 0.4; } 50% { opacity: 1; } }
 
-/* Скрываем контент сайта до клика, чтобы не мелькал */
 .container {
+    max-width: 1200px; 
+    margin: 0 auto; 
+    padding: 40px 20px 120px;
+    
+    /* Скрытое состояние */
     opacity: 0;
     transform: translateY(30px);
-    transition: opacity 1s ease, transform 1s ease;
+    transition: opacity 0.8s ease, transform 0.8s ease;
 }
 
-/* Когда JS добавит этот класс, сайт появится */
+/* Видимое состояние (добавляется JS-ом) */
 .container.visible {
     opacity: 1;
     transform: translateY(0);

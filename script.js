@@ -1,60 +1,153 @@
 document.addEventListener("DOMContentLoaded", () => {
+    // 1. Запускаем фон
     initSpaceBackground();
     
-    // Сначала показываем только оверлей, остальное грузим в фоне
+    // 2. ЗАГРУЖАЕМ ДАННЫЕ (сразу, не ждем клика)
     loadBio();
     renderTechStack();
     loadRepos();
     renderProjects();
 
-    // Главная точка входа
-    initOverlayAndPlayer();
+    // 3. Инициализируем логику входа
+    initOverlayAndLogic();
 });
 
-/* --- 0. Overlay & Player Init --- */
-function initOverlayAndPlayer() {
+/* --- Логика Оверлея и Входа --- */
+function initOverlayAndLogic() {
     const overlay = document.getElementById('overlay');
     const container = document.querySelector('.container');
     
-    // Инициализируем плеер (получаем управление)
+    // Инициализируем плеер (чтобы был готов играть)
     const playerControls = initMusicPlayerControls(); 
 
-    // Клик по оверлею = Вход на сайт
+    // Обработка клика "Войти"
     overlay.addEventListener('click', () => {
-        // 1. Плавно скрываем оверлей
+        // А. Скрываем оверлей
         overlay.style.opacity = '0';
-        
-        // 2. Плавно показываем сайт
+        overlay.style.pointerEvents = 'none'; // Чтобы больше не кликалось
+
+        // Б. Показываем контент (добавляем класс из CSS)
         container.classList.add('visible');
 
-        // 3. Убираем оверлей полностью через 0.8 сек (время анимации)
+        // В. Удаляем оверлей из DOM через секунду
         setTimeout(() => {
             overlay.style.display = 'none';
         }, 800);
 
-        // 4. Запускаем музыку (теперь браузер разрешит)
+        // Г. Запускаем музыку
         if (playerControls) {
             playerControls.play();
         }
     });
 }
 
-/* --- 1. Music Player Logic --- */
+/* --- Функции загрузки данных --- */
+
+async function loadBio() {
+    if(typeof CONFIG === 'undefined') return;
+    const bioCard = document.getElementById('bio-card');
+    try {
+        const response = await fetch(`https://api.github.com/users/${CONFIG.githubUsername}`);
+        if(!response.ok) throw new Error("GitHub Error");
+        const data = await response.json();
+        bioCard.innerHTML = `
+            <img src="${data.avatar_url}" alt="Ava" class="avatar">
+            <div class="bio-name">${data.name || data.login}</div>
+            <div class="bio-loc"><i class="fa-solid fa-location-dot"></i> Russia <span class="flag">🇷🇺</span></div>
+            <div class="socials">
+                <a href="${CONFIG.socials.telegram}" target="_blank"><i class="fa-brands fa-telegram"></i></a>
+                <a href="${CONFIG.socials.discord}" target="_blank"><i class="fa-brands fa-discord"></i></a>
+                <a href="${data.html_url}" target="_blank"><i class="fa-brands fa-github"></i></a>
+            </div>
+            <div class="about-text">${CONFIG.aboutMe}</div>
+        `;
+    } catch (e) { 
+        bioCard.innerHTML = `<p style="color:red">Error loading Bio from GitHub.<br>Check console.</p>`; 
+        console.error(e);
+    }
+}
+
+function renderTechStack() {
+    const track = document.getElementById('tech-track');
+    // Утраиваем массив для длинной бесконечной ленты
+    const techs = [...CONFIG.technologies, ...CONFIG.technologies, ...CONFIG.technologies]; 
+    track.innerHTML = '';
+    
+    techs.forEach(tech => {
+        let el;
+        if(CONFIG.useIcons) {
+            el = document.createElement('i'); 
+            el.className = `${tech} tech-icon-font`;
+        } else {
+            el = document.createElement('img'); 
+            el.src = `assets/technologies/${tech}.svg`; 
+            el.className = 'tech-icon';
+            el.onerror = () => { el.style.display = 'none'; };
+        }
+        track.appendChild(el);
+    });
+}
+
+async function loadRepos() {
+    const list = document.getElementById('repos-list');
+    try {
+        const res = await fetch(`https://api.github.com/users/${CONFIG.githubUsername}/repos?sort=updated&per_page=6`);
+        if (!res.ok) throw new Error();
+        const repos = await res.json();
+        list.innerHTML = '';
+        repos.forEach(repo => {
+            const a = document.createElement('a'); 
+            a.href = repo.html_url; 
+            a.target = "_blank"; 
+            a.className = 'repo-item';
+            a.innerHTML = `
+                <span class="repo-name">${repo.name}</span>
+                <span class="repo-desc">${repo.description || 'No description'}</span>
+            `;
+            list.appendChild(a);
+        });
+    } catch(e) { 
+        list.innerHTML = '<p>Error loading repos</p>'; 
+    }
+}
+
+function renderProjects() {
+    const grid = document.getElementById('projects-grid');
+    CONFIG.projects.forEach(proj => {
+        const a = document.createElement('a'); 
+        a.href = proj.link; 
+        a.target = "_blank"; 
+        a.className = 'project-item';
+        a.innerHTML = `
+            <div class="project-top">
+                <img src="${proj.logoUrl}" class="project-img">
+                <div>
+                    <div style="font-weight:700">${proj.name}</div>
+                    <span class="project-role">${proj.role}</span>
+                </div>
+            </div>
+            <div class="project-desc">${proj.description}</div>
+        `;
+        grid.appendChild(a);
+    });
+}
+
+/* --- Музыкальный плеер --- */
 function initMusicPlayerControls() {
     if (!CONFIG.playlist || CONFIG.playlist.length === 0) {
-        document.querySelector('.player-wrapper').style.display = 'none';
+        const wrapper = document.querySelector('.player-wrapper');
+        if(wrapper) wrapper.style.display = 'none';
         return null;
     }
 
     const audio = new Audio();
-    audio.volume = 0.4;
+    audio.volume = 0.5;
     let index = 0;
     let isPlaying = false;
     let ctx, analyser, canvas, canvasCtx;
 
     // UI Elements
     const els = {
-        wrapper: document.querySelector('.player-wrapper'),
         player: document.getElementById('music-player'),
         expandBtn: document.getElementById('expand-btn'),
         play: document.getElementById('play-btn'),
@@ -68,7 +161,6 @@ function initMusicPlayerControls() {
         dur: document.getElementById('duration')
     };
 
-    // --- Load Track ---
     function loadTrack(i) {
         const track = CONFIG.playlist[i];
         audio.src = `songs/${track.filename}`;
@@ -77,9 +169,8 @@ function initMusicPlayerControls() {
         els.slider.value = 0;
     }
 
-    // --- Play/Pause ---
     function togglePlay() {
-        if (!ctx) setupVisualizer(); // Init audio context on first play
+        if (!ctx) setupVisualizer();
         
         if (isPlaying) {
             audio.pause();
@@ -98,14 +189,13 @@ function initMusicPlayerControls() {
         els.miniPlay.innerHTML = icon;
     }
 
-    // --- Events ---
+    // Events
     els.play.onclick = togglePlay;
     els.miniPlay.onclick = (e) => { e.stopPropagation(); togglePlay(); };
     els.next.onclick = () => { index = (index + 1) % CONFIG.playlist.length; loadTrack(index); if(isPlaying) audio.play(); };
     els.prev.onclick = () => { index = (index - 1 + CONFIG.playlist.length) % CONFIG.playlist.length; loadTrack(index); if(isPlaying) audio.play(); };
     audio.onended = els.next.onclick;
 
-    // Timeline
     audio.ontimeupdate = () => {
         if (audio.duration) {
             const pct = (audio.currentTime / audio.duration) * 100;
@@ -116,26 +206,22 @@ function initMusicPlayerControls() {
     };
     els.slider.oninput = () => { audio.currentTime = (els.slider.value / 100) * audio.duration; };
 
-    // --- EXPAND / COLLAPSE LOGIC (NEW) ---
-    // Кнопка стрелочка
+    // Свернуть/Развернуть
     els.expandBtn.onclick = () => {
         const isCollapsed = els.player.classList.contains('collapsed');
-        
         if (isCollapsed) {
-            // Развернуть
             els.player.classList.remove('collapsed');
-            els.expandBtn.classList.add('active'); // Стрелка вниз
-            els.expandBtn.classList.remove('hidden'); // Всегда видна
-            els.expandBtn.innerHTML = '<i class="fa-solid fa-chevron-up"></i>'; // Иконка перевернется CSS-ом
+            els.expandBtn.classList.add('active');
+            els.expandBtn.classList.remove('hidden');
+            els.expandBtn.innerHTML = '<i class="fa-solid fa-chevron-up"></i>';
         } else {
-            // Свернуть
             els.player.classList.add('collapsed');
             els.expandBtn.classList.remove('active');
-            els.expandBtn.classList.add('hidden'); // Скрываем, пока не наведешь
+            els.expandBtn.classList.add('hidden');
         }
     };
 
-    // --- Красивый Визуализатор ---
+    // Визуализатор
     function setupVisualizer() {
         if (ctx) return;
         try {
@@ -146,10 +232,7 @@ function initMusicPlayerControls() {
             src.connect(analyser);
             analyser.connect(ctx.destination);
             
-            // Настройка сглаживания для красоты
-            analyser.fftSize = 128; // Меньше столбиков, но шире
-            analyser.smoothingTimeConstant = 0.85; 
-
+            analyser.fftSize = 128;
             canvas = document.getElementById('visualizer');
             canvasCtx = canvas.getContext('2d');
             const bufferLength = analyser.frequencyBinCount;
@@ -161,28 +244,19 @@ function initMusicPlayerControls() {
 
                 analyser.getByteFrequencyData(dataArray);
                 canvasCtx.clearRect(0, 0, canvas.width, canvas.height);
-
                 const width = canvas.width;
                 const height = canvas.height;
-                const barWidth = (width / bufferLength) * 2; // Широкие полосы
+                const barWidth = (width / bufferLength) * 2; 
                 
-                // Создаем градиент
                 const gradient = canvasCtx.createLinearGradient(0, height, 0, 0);
-                gradient.addColorStop(0, '#9d4edd'); // Фиолетовый
-                gradient.addColorStop(1, '#e0aaff'); // Светлый
-
+                gradient.addColorStop(0, '#9d4edd');
+                gradient.addColorStop(1, '#e0aaff');
                 canvasCtx.fillStyle = gradient;
 
-                // Рисуем симметрично от центра
                 for (let i = 0; i < bufferLength; i++) {
-                    const barHeight = (dataArray[i] / 255) * height; // Нормализуем высоту
-                    
-                    // Левая часть (зеркало)
+                    const barHeight = (dataArray[i] / 255) * height;
                     const x1 = (width / 2) - (i * barWidth);
-                    // Правая часть
                     const x2 = (width / 2) + (i * barWidth);
-
-                    // Закругленные верхушки (эмуляция)
                     canvasCtx.fillRect(x1, height - barHeight, barWidth - 1, barHeight);
                     canvasCtx.fillRect(x2, height - barHeight, barWidth - 1, barHeight);
                 }
@@ -191,23 +265,18 @@ function initMusicPlayerControls() {
         } catch(e) { console.error("Visualizer error:", e); }
     }
 
-    // Предзагрузка первого трека
     loadTrack(index);
 
-    // Возвращаем метод play для вызова из оверлея
-    return {
-        play: () => togglePlay()
-    };
+    return { play: () => togglePlay() };
 }
 
-/* --- Helpers --- */
+/* --- Helpers & Background --- */
 function fmtTime(s) {
     const m = Math.floor(s / 60);
     const sec = Math.floor(s % 60);
     return `${m}:${sec < 10 ? '0'+sec : sec}`;
 }
 
-/* --- Space BG (тот же) --- */
 function initSpaceBackground() {
     const canvas = document.getElementById('space-canvas');
     const ctx = canvas.getContext('2d');
@@ -231,64 +300,4 @@ function initSpaceBackground() {
         requestAnimationFrame(animate);
     }
     window.addEventListener('resize', resize); resize(); animate();
-}
-
-/* --- Остальные функции загрузки (те же, только исправленные на null check) --- */
-async function loadBio() {
-    if(typeof CONFIG === 'undefined') return;
-    const bioCard = document.getElementById('bio-card');
-    try {
-        const response = await fetch(`https://api.github.com/users/${CONFIG.githubUsername}`);
-        if(!response.ok) throw new Error();
-        const data = await response.json();
-        bioCard.innerHTML = `
-            <img src="${data.avatar_url}" alt="Ava" class="avatar">
-            <div class="bio-name">${data.name || data.login}</div>
-            <div class="bio-loc"><i class="fa-solid fa-location-dot"></i> Russia <span class="flag">🇷🇺</span></div>
-            <div class="socials">
-                <a href="${CONFIG.socials.telegram}" target="_blank"><i class="fa-brands fa-telegram"></i></a>
-                <a href="${CONFIG.socials.discord}" target="_blank"><i class="fa-brands fa-discord"></i></a>
-                <a href="${data.html_url}" target="_blank"><i class="fa-brands fa-github"></i></a>
-            </div>
-            <div class="about-text">${CONFIG.aboutMe}</div>
-        `;
-    } catch (e) { bioCard.innerHTML = `<p>Error loading Bio</p>`; }
-}
-
-function renderTechStack() {
-    const track = document.getElementById('tech-track');
-    const techs = [...CONFIG.technologies, ...CONFIG.technologies, ...CONFIG.technologies]; 
-    track.innerHTML = '';
-    techs.forEach(tech => {
-        let el;
-        if(CONFIG.useIcons) {
-            el = document.createElement('i'); el.className = `${tech} tech-icon-font`;
-        } else {
-            el = document.createElement('img'); el.src = `assets/technologies/${tech}.svg`; el.className = 'tech-icon';
-        }
-        track.appendChild(el);
-    });
-}
-
-async function loadRepos() {
-    const list = document.getElementById('repos-list');
-    try {
-        const res = await fetch(`https://api.github.com/users/${CONFIG.githubUsername}/repos?sort=updated&per_page=6`);
-        const repos = await res.json();
-        list.innerHTML = '';
-        repos.forEach(repo => {
-            const a = document.createElement('a'); a.href = repo.html_url; a.target = "_blank"; a.className = 'repo-item';
-            a.innerHTML = `<span class="repo-name">${repo.name}</span><span class="repo-desc">${repo.description || 'No desc'}</span>`;
-            list.appendChild(a);
-        });
-    } catch(e) { list.innerHTML = 'Error loading repos'; }
-}
-
-function renderProjects() {
-    const grid = document.getElementById('projects-grid');
-    CONFIG.projects.forEach(proj => {
-        const a = document.createElement('a'); a.href = proj.link; a.target = "_blank"; a.className = 'project-item';
-        a.innerHTML = `<div class="project-top"><img src="${proj.logoUrl}" class="project-img"><div><div style="font-weight:700">${proj.name}</div><span class="project-role">${proj.role}</span></div></div><div class="project-desc">${proj.description}</div>`;
-        grid.appendChild(a);
-    });
 }
