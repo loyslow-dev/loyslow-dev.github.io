@@ -5,13 +5,11 @@
 
 const ReposModule = (() => {
 
-    // ===== CONFIGURATION =====
     const GITHUB_USERNAME = 'loyslow-dev';
     const API_URL = `https://api.github.com/users/${GITHUB_USERNAME}/repos?sort=updated&per_page=12`;
-    const MAX_REPOS = 12; // Max repos to show
+    const MAX_REPOS = 12;
     // ==========================
 
-    // Language colors (GitHub style)
     const LANG_COLORS = {
         JavaScript: '#f1e05a',
         TypeScript: '#3178c6',
@@ -39,7 +37,6 @@ const ReposModule = (() => {
         const grid = document.getElementById('repos-grid');
         if (!grid) return;
 
-        // Show skeletons
         grid.innerHTML = Array(6).fill(0).map(() => createSkeleton()).join('');
 
         try {

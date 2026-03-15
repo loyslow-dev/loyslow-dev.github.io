@@ -10,7 +10,6 @@
         "avatar  socials  stats";
 }
 
-/* Avatar Card */
 .bio-avatar-card {
     grid-area: avatar;
     display: flex;
@@ -85,7 +84,6 @@
     font-size: 0.85rem;
 }
 
-/* Info Card */
 .bio-info-card {
     grid-area: info;
 }
@@ -96,7 +94,6 @@
     font-size: 0.95rem;
 }
 
-/* Location Card */
 .bio-location-card {
     grid-area: location;
 }
@@ -108,7 +105,6 @@
     font-size: 1.1rem;
 }
 
-/* ===== FLAG — SVG instead of emoji ===== */
 .flag-icon {
     width: 36px;
     height: 24px;
@@ -119,7 +115,6 @@
     animation: flagWave 2s ease-in-out infinite;
 }
 
-/* Inline SVG flag container */
 .flag-svg-wrapper {
     display: flex;
     align-items: center;
@@ -146,7 +141,6 @@
     font-weight: 600;
 }
 
-/* Socials Card */
 .bio-socials-card {
     grid-area: socials;
 }
@@ -199,7 +193,6 @@
     font-size: 1.1rem;
 }
 
-/* Stats Card */
 .bio-stats-card {
     grid-area: stats;
 }
@@ -236,7 +229,6 @@
     letter-spacing: 1px;
 }
 
-/* Responsive */
 @media (max-width: 900px) {
     .bio-grid {
         grid-template-columns: 1fr 1fr;

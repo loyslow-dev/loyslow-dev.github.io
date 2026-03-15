@@ -3,7 +3,6 @@
    ============================================ */
 
 :root {
-    /* Colors */
     --bg-primary: #0a0a0f;
     --bg-secondary: #12121a;
     --bg-card: rgba(18, 18, 30, 0.7);
@@ -27,7 +26,6 @@
     --border-color: rgba(255, 255, 255, 0.06);
     --border-hover: rgba(124, 58, 237, 0.3);
 
-    /* Sizing */
     --radius-sm: 8px;
     --radius-md: 14px;
     --radius-lg: 20px;
@@ -36,13 +34,11 @@
     --gap: 16px;
     --container-max: 1200px;
 
-    /* Transitions */
     --transition-fast: 0.2s cubic-bezier(0.4, 0, 0.2, 1);
     --transition-normal: 0.3s cubic-bezier(0.4, 0, 0.2, 1);
     --transition-slow: 0.5s cubic-bezier(0.4, 0, 0.2, 1);
     --transition-spring: 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
 
-    /* Shadows */
     --shadow-card: 0 4px 24px rgba(0, 0, 0, 0.3), 0 0 0 1px var(--border-color);
     --shadow-card-hover: 0 8px 40px rgba(0, 0, 0, 0.4), 0 0 0 1px var(--border-hover);
     --shadow-glow: 0 0 40px var(--accent-glow);
@@ -69,7 +65,6 @@ body {
     min-height: 100vh;
 }
 
-/* Scrollbar */
 ::-webkit-scrollbar {
     width: 6px;
 }
@@ -87,25 +82,21 @@ body {
     background: var(--accent-secondary);
 }
 
-/* Selection */
 ::selection {
     background: var(--accent-primary);
     color: white;
 }
 
-/* Container */
 .container {
     max-width: var(--container-max);
     margin: 0 auto;
     padding: 40px 20px;
 }
 
-/* Hidden */
 .hidden {
     display: none !important;
 }
 
-/* Section */
 .bento-section {
     margin-bottom: 60px;
 }
@@ -137,13 +128,11 @@ body {
     font-size: 0.95rem;
 }
 
-/* Bento Grid */
 .bento-grid {
     display: grid;
     gap: var(--gap);
 }
 
-/* Bento Card */
 .bento-card {
     background: var(--bg-card);
     backdrop-filter: blur(20px);
@@ -196,7 +185,6 @@ body {
     font-size: 1rem;
 }
 
-/* Footer */
 .site-footer {
     text-align: center;
     padding: 40px 0;
@@ -219,7 +207,6 @@ body {
     font-size: 0.75rem;
 }
 
-/* Responsive */
 @media (max-width: 768px) {
     .container {
         padding: 20px 12px;

@@ -86,7 +86,6 @@
     color: var(--text-primary);
 }
 
-/* Icon colors on hover (through colored class) */
 .tech-item:hover .devicon-html5-plain,
 .tech-item:hover .devicon-html5-plain-wordmark { color: #e34f26; }
 

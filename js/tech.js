@@ -5,7 +5,6 @@
 
 const TechModule = (() => {
 
-    // ===== CONFIGURE YOUR TECHNOLOGIES HERE =====
     const TECHNOLOGIES = [
         { icon: 'devicon-html5-plain',       name: 'HTML5' },
         { icon: 'devicon-css3-plain',        name: 'CSS3' },
@@ -21,19 +20,16 @@ const TechModule = (() => {
         { icon: 'devicon-bash-plain',        name: 'Bash' },
         { icon: 'devicon-vscode-plain',      name: 'VS Code' },
     ];
-    // =============================================
 
     function init() {
         const marquee = document.getElementById('tech-marquee');
         if (!marquee) return;
 
-        // Create items (duplicated for seamless loop)
         const html = buildItems() + buildItems();
         marquee.innerHTML = html;
 
-        // Adjust animation speed based on item count
-        const totalWidth = TECHNOLOGIES.length * 100; // approx px per item
-        const speed = totalWidth / 50; // seconds
+        const totalWidth = TECHNOLOGIES.length * 100;
+        const speed = totalWidth / 50;
         marquee.style.animationDuration = `${speed}s`;
     }
 

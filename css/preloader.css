@@ -29,7 +29,6 @@
     position: relative;
 }
 
-/* Glitch Effect */
 .preloader-glitch {
     font-family: 'JetBrains Mono', monospace;
     font-size: 4rem;
@@ -140,7 +139,6 @@
     animation: fadeInUp 1s ease 1s both;
 }
 
-/* Particles */
 .preloader-particles {
     position: absolute;
     top: 0;

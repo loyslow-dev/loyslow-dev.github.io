@@ -8,14 +8,11 @@ const PreloaderModule = (() => {
     function init(callback) {
         onComplete = callback;
 
-        // Create floating particles
         createParticles();
 
-        // Listen for click
         const preloader = document.getElementById('preloader');
         if (preloader) {
             preloader.addEventListener('click', handleClick, { once: true });
-            // Also listen for any key
             document.addEventListener('keydown', handleClick, { once: true });
         }
     }
@@ -24,11 +21,9 @@ const PreloaderModule = (() => {
         const preloader = document.getElementById('preloader');
         if (!preloader) return;
 
-        // Remove other listener
         preloader.removeEventListener('click', handleClick);
         document.removeEventListener('keydown', handleClick);
 
-        // Fade out
         preloader.classList.add('fade-out');
 
         setTimeout(() => {

@@ -8,10 +8,9 @@ const BioModule = (() => {
     const GITHUB_USERNAME = 'loyslow-dev';
     const API_URL = `https://api.github.com/users/${GITHUB_USERNAME}`;
 
-    // Social links - EDIT THESE
     const SOCIAL_LINKS = {
-        telegram: 'https://t.me/loyslow',       // ← Edit your Telegram
-        discord: 'https://discord.com/users/loyslow' // ← Edit your Discord
+        telegram: 'https://t.me/loyslow',
+        discord: 'https://discord.com/users/loyslow'
     };
     // ==========================
 
@@ -29,24 +28,19 @@ const BioModule = (() => {
     }
 
     function populateBio(data) {
-        // Avatar
         const avatar = document.getElementById('bio-avatar');
         if (avatar) avatar.src = data.avatar_url || '';
 
-        // Name
         const name = document.getElementById('bio-name');
         if (name) name.textContent = data.name || data.login || GITHUB_USERNAME;
 
-        // Username
         const username = document.getElementById('bio-username');
         if (username) username.textContent = `@${data.login}`;
 
-        // Stats with count animation
         animateNumber('stat-repos', data.public_repos || 0);
         animateNumber('stat-followers', data.followers || 0);
         animateNumber('stat-following', data.following || 0);
 
-        // Social links
         const tgLink = document.getElementById('social-telegram');
         if (tgLink) tgLink.href = SOCIAL_LINKS.telegram;
 
@@ -81,7 +75,6 @@ const BioModule = (() => {
         function update(now) {
             const elapsed = now - start;
             const progress = Math.min(elapsed / duration, 1);
-            // Ease out cubic
             const eased = 1 - Math.pow(1 - progress, 3);
             el.textContent = Math.floor(eased * target);
 

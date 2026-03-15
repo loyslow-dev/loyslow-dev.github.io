@@ -5,7 +5,6 @@
 
 const ProjectsModule = (() => {
 
-    // ===== ADD YOUR PROJECTS HERE =====
     const PROJECTS = [
         {
             name: 'AfricaRP',

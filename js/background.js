@@ -15,7 +15,6 @@ const BackgroundModule = (() => {
     let time = 0;
 
     function init() {
-        // Try video first
         tryVideo()
             .then(found => {
                 if (!found) return tryGif();
@@ -58,13 +57,11 @@ const BackgroundModule = (() => {
         });
     }
 
-    // ===== Stranger Things Animated Background =====
     function initStrangerThings() {
         canvas.classList.add('active');
         resize();
         window.addEventListener('resize', resize);
 
-        // Create particles
         for (let i = 0; i < 80; i++) {
             particles.push(createParticle());
         }
@@ -95,23 +92,18 @@ const BackgroundModule = (() => {
         if (!ctx) return;
         time += 0.01;
 
-        // Dark background with slight red tint
         ctx.fillStyle = 'rgba(5, 2, 3, 0.15)';
         ctx.fillRect(0, 0, canvas.width, canvas.height);
 
-        // Draw atmospheric fog
         drawFog();
 
-        // Draw particles (floating embers/spores)
         particles.forEach(p => {
             p.x += p.speedX + Math.sin(time + p.flickerPhase) * 0.3;
             p.y += p.speedY;
 
-            // Flicker
             const flicker = Math.sin(time * 10 * p.flickerSpeed + p.flickerPhase);
             const alpha = p.opacity * (0.5 + flicker * 0.5);
 
-            // Reset if out of bounds
             if (p.y < -10) {
                 p.y = canvas.height + 10;
                 p.x = Math.random() * canvas.width;
@@ -124,7 +116,6 @@ const BackgroundModule = (() => {
             ctx.fill();
             ctx.globalAlpha = 1;
 
-            // Glow
             if (p.size > 1.5) {
                 ctx.beginPath();
                 ctx.arc(p.x, p.y, p.size * 3, 0, Math.PI * 2);
@@ -136,14 +127,12 @@ const BackgroundModule = (() => {
             }
         });
 
-        // Random lightning
         if (Math.random() < 0.003) {
             createLightning();
         }
 
         drawLightnings();
 
-        // Vignette
         drawVignette();
 
         animationId = requestAnimationFrame(animate);
@@ -161,7 +150,6 @@ const BackgroundModule = (() => {
             ctx.fillRect(0, y - 100, canvas.width, 200);
         }
 
-        // Bottom red glow
         const bottomGrd = ctx.createLinearGradient(0, canvas.height - 200, 0, canvas.height);
         bottomGrd.addColorStop(0, 'rgba(204, 17, 0, 0)');
         bottomGrd.addColorStop(1, `rgba(204, 17, 0, ${0.05 + Math.sin(time * 0.8) * 0.03})`);

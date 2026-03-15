@@ -2,7 +2,6 @@
    MUSIC PLAYER STYLES
    ============================================ */
 
-/* Mini Player */
 .player-mini {
     position: fixed;
     bottom: 20px;
@@ -70,7 +69,6 @@
     transition: height 0.15s ease;
 }
 
-/* Expand Hint */
 .player-expand-hint {
     position: absolute;
     top: -40px;
@@ -102,7 +100,6 @@
     color: white;
 }
 
-/* Full Player */
 .player-full {
     position: fixed;
     bottom: 80px;
@@ -150,7 +147,6 @@
     color: var(--text-primary);
 }
 
-/* ===== Track Cover Art ===== */
 .player-cover-container {
     display: flex;
     justify-content: center;
@@ -190,7 +186,6 @@
     to { transform: rotate(360deg); }
 }
 
-/* Visualizer */
 .player-visualizer-container {
     border-radius: var(--radius-md);
     overflow: hidden;
@@ -204,7 +199,6 @@
     display: block;
 }
 
-/* Track Info */
 .player-track-info {
     text-align: center;
 }
@@ -227,7 +221,6 @@
     text-overflow: ellipsis;
 }
 
-/* Timeline */
 .player-timeline {
     display: flex;
     align-items: center;
@@ -278,7 +271,6 @@
     box-shadow: 0 0 10px var(--accent-glow);
 }
 
-/* Controls */
 .player-controls {
     display: flex;
     align-items: center;
@@ -320,7 +312,6 @@
     transform: scale(1.15);
 }
 
-/* Volume */
 .player-volume {
     display: flex;
     align-items: center;
@@ -368,7 +359,6 @@
     border: none;
 }
 
-/* Playlist */
 .player-playlist {
     max-height: 140px;
     overflow-y: auto;

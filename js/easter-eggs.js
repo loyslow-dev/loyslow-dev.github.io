@@ -5,7 +5,6 @@
 
 const EasterEggsModule = (() => {
 
-    // Konami Code: ↑ ↑ ↓ ↓ ← → ← → B A
     const KONAMI = [
         'ArrowUp', 'ArrowUp', 'ArrowDown', 'ArrowDown',
         'ArrowLeft', 'ArrowRight', 'ArrowLeft', 'ArrowRight',
@@ -15,10 +14,8 @@ const EasterEggsModule = (() => {
     let secretTyped = '';
 
     function init() {
-        // Ensure toast container exists
         ensureToastContainer();
 
-        // Konami code
         document.addEventListener('keydown', (e) => {
             if (e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA') return;
 
@@ -33,7 +30,6 @@ const EasterEggsModule = (() => {
             }
         });
 
-        // Secret words
         document.addEventListener('keypress', (e) => {
             if (e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA') return;
 
@@ -64,17 +60,14 @@ const EasterEggsModule = (() => {
             'color: #a855f7; font-size: 14px; font-weight: bold;'
         );
 
-        // Cursor trail (desktop only)
         initCursorGlow();
 
-        // Footer year
         const footerYear = document.querySelector('.footer-year');
         if (footerYear) {
             footerYear.textContent = `© ${new Date().getFullYear()}`;
         }
     }
 
-    // ===== TOAST NOTIFICATION SYSTEM =====
     function ensureToastContainer() {
         if (!document.getElementById('toast-container')) {
             const container = document.createElement('div');
@@ -102,13 +95,11 @@ const EasterEggsModule = (() => {
 
         container.appendChild(toast);
 
-        // Auto remove
         setTimeout(() => {
             toast.classList.add('toast-out');
             setTimeout(() => toast.remove(), 400);
         }, duration);
 
-        // Click to dismiss
         toast.addEventListener('click', () => {
             toast.classList.add('toast-out');
             setTimeout(() => toast.remove(), 400);
@@ -117,13 +108,11 @@ const EasterEggsModule = (() => {
         return toast;
     }
 
-    // ===== EASTER EGG: Konami Code =====
     function activateKonami() {
         showToast('🎮', 'Konami Code Activated!', 'Ты — настоящий гик 🤓', 5000, true);
         createConfetti();
     }
 
-    // ===== EASTER EGG: Matrix =====
     function activateMatrix() {
         showToast('💊', 'Matrix Mode', 'Добро пожаловать в реальность...', 4000, true);
         document.body.style.transition = 'filter 1s ease';
@@ -136,7 +125,6 @@ const EasterEggsModule = (() => {
         }, 5000);
     }
 
-    // ===== EASTER EGG: Party Mode =====
     function activatePartyMode() {
         showToast('🎉', 'Party Mode!', 'Дискотека на 3 секунды!', 3500, true);
         document.body.style.transition = 'filter 0.15s ease';
@@ -152,11 +140,9 @@ const EasterEggsModule = (() => {
         }, 80);
     }
 
-    // ===== Confetti =====
     function createConfetti() {
         const colors = ['#7c3aed', '#a855f7', '#c084fc', '#f59e0b', '#ef4444', '#22c55e', '#3b82f6', '#ec4899'];
 
-        // Inject animation if not exists
         if (!document.getElementById('confetti-style')) {
             const style = document.createElement('style');
             style.id = 'confetti-style';
@@ -195,14 +181,12 @@ const EasterEggsModule = (() => {
                 animation-delay: ${Math.random() * 0.8}s;
                 opacity: 0;
             `;
-            // Small delay to start visible
             requestAnimationFrame(() => confetti.style.opacity = '1');
             document.body.appendChild(confetti);
             setTimeout(() => confetti.remove(), 5000);
         }
     }
 
-    // ===== Cursor Glow (desktop) =====
     function initCursorGlow() {
         if (!window.matchMedia('(hover: hover)').matches) return;
 
@@ -236,6 +220,5 @@ const EasterEggsModule = (() => {
         });
     }
 
-    // Public API — expose showToast for other modules
     return { init, showToast };
 })();
