@@ -6,49 +6,44 @@
 
 const PlayerModule = (() => {
 
-    // ===== CONFIGURE YOUR SONGS HERE =====
     // Each song can have:
     //   file:   path to mp3 (required)
     //   title:  track title (optional — auto-parsed from filename if empty)
     //   artist: artist name (optional — auto-parsed from filename if empty)
     //   cover:  path to cover image (optional — checks songs/filename.png/.jpg auto)
-    //
-    // Filename format for auto-parsing: "Artist - Title.mp3"
 
     const SONGS = [
         {
             file: 'songs/song1.mp3',
-            title: 'КРАСНАЯ ПЛЕСЕНЬ x CYBERPUNK 2077',           // Leave empty to auto-parse from filename
-            artist: 'ГИМН КИБЕРПАНКОВ',          // Leave empty to auto-parse from filename
-            cover: ''            // Leave empty — will try songs/song1.png then songs/song1.jpg
+            title: 'КРАСНАЯ ПЛЕСЕНЬ x CYBERPUNK 2077',
+            artist: 'ГИМН КИБЕРПАНКОВ',
+            cover: ''
         },
         {
             file: 'songs/song2.mp3',
             title: 'Stranger Things Main Theme',
             artist: 'L`Orchestra Cinematique, Michael Stein, Kyle Dixon',
-            cover: 'songs/song2.jpg'    // Explicit cover path
+            cover: 'songs/song2.jpg'
         },
         {
             file: 'songs/song3.mp3',
             title: 'Kids',
             artist: 'Kyle Dixon & Michael Stein',
-            cover: 'songs/song3.jpg'    // Explicit cover path
+            cover: 'songs/song3.jpg'
         },
         {
             file: 'songs/song4.mp3',
             title: 'The Upside Down',
             artist: 'Kyle Dixon & Michael Stein',
-            cover: 'songs/song4.jpg'    // Explicit cover path
+            cover: 'songs/song4.jpg'
         },
-        // ===== ADD MORE SONGS =====
-        // {
-        //     file: 'songs/mysong.mp3',
-        //     title: 'My Song Name',
-        //     artist: 'Artist Name',
-        //     cover: 'songs/mysong.jpg'
-        // },
+        {
+            file: 'songs/song5.mp3',
+            title: 'Kate Bush',
+            artist: 'Running Up That Hill',
+            cover: ''
+        },
     ];
-    // ======================================
 
     let audioContext = null;
     let analyser = null;
