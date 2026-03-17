@@ -10,7 +10,7 @@ const ProjectsModule = (() => {
             name: 'AfricaRP',
             role: 'Developer & Admin',
             description: 'Игровой сервер с кастомными плагинами и уникальным геймплеем.',
-            logo: 'assets/africarp.jpg',
+            logo: 'assets/africarp.png',
             emoji: '',
             url: 'https://t.me/africarp'
         },
