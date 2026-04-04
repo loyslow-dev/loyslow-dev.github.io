@@ -2,269 +2,389 @@
 <html lang="ru">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>loyslow — Developer</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <title>Маршрутизатор | Hello / Bye</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
 
-    <!-- Fonts -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;500;600;700&family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+        body {
+            background: linear-gradient(145deg, #f6f9fc 0%, #eef2f5 100%);
+            font-family: 'Segoe UI', 'Roboto', system-ui, -apple-system, 'Inter', sans-serif;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 1.5rem;
+        }
 
-    <!-- Font Awesome -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+        .card {
+            max-width: 680px;
+            width: 100%;
+            background: rgba(255, 255, 255, 0.92);
+            backdrop-filter: blur(2px);
+            border-radius: 2.5rem;
+            box-shadow: 0 20px 35px -12px rgba(0, 0, 0, 0.2), 0 1px 3px rgba(0, 0, 0, 0.05);
+            overflow: hidden;
+            transition: all 0.2s ease;
+            border: 1px solid rgba(255, 255, 255, 0.5);
+        }
 
-    <!-- Devicon -->
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/devicons/devicon@v2.16.0/devicon.min.css">
+        .nav-bar {
+            background: white;
+            padding: 1rem 2rem;
+            border-bottom: 1px solid #e9edf2;
+            display: flex;
+            gap: 1.2rem;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
 
-    <!-- CSS Modules -->
-    <link rel="stylesheet" href="css/main.css">
-    <link rel="stylesheet" href="css/preloader.css">
-    <link rel="stylesheet" href="css/background.css">
-    <link rel="stylesheet" href="css/bio.css">
-    <link rel="stylesheet" href="css/tech.css">
-    <link rel="stylesheet" href="css/repos.css">
-    <link rel="stylesheet" href="css/projects.css">
-    <link rel="stylesheet" href="css/player.css">
-    <link rel="stylesheet" href="css/animations.css">
+        .nav-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            background: transparent;
+            border: none;
+            font-size: 1.1rem;
+            font-weight: 500;
+            padding: 0.6rem 1.3rem;
+            border-radius: 2rem;
+            cursor: pointer;
+            transition: all 0.2s;
+            text-decoration: none;
+            color: #1e2f3e;
+            background: #f1f5f9;
+            backdrop-filter: blur(4px);
+        }
+
+        .nav-link i {
+            font-style: normal;
+            font-weight: 600;
+            font-size: 1.2rem;
+        }
+
+        .nav-link:hover {
+            background: #e2e8f0;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 12px rgba(0, 0, 0, 0.05);
+        }
+
+        .nav-link:active {
+            transform: translateY(1px);
+        }
+
+        .content-container {
+            padding: 3rem 2rem;
+            min-height: 380px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            background: #ffffffd9;
+        }
+
+        .message-box {
+            animation: fadeSlideUp 0.35s cubic-bezier(0.2, 0.9, 0.4, 1.1);
+        }
+
+        @keyframes fadeSlideUp {
+            from {
+                opacity: 0;
+                transform: translateY(12px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .greeting {
+            font-size: 3.5rem;
+            font-weight: 800;
+            letter-spacing: -0.02em;
+            background: linear-gradient(135deg, #0f2b3d, #1b4f6e);
+            background-clip: text;
+            -webkit-background-clip: text;
+            color: transparent;
+            margin-bottom: 1rem;
+        }
+
+        .sub {
+            font-size: 1.2rem;
+            color: #4a627a;
+            border-top: 2px solid #dce5ec;
+            padding-top: 1.5rem;
+            margin-top: 0.5rem;
+            display: inline-block;
+        }
+
+        .path-badge {
+            background: #eef2ff;
+            padding: 0.3rem 1rem;
+            border-radius: 40px;
+            font-family: monospace;
+            font-size: 0.85rem;
+            color: #2563eb;
+            margin-top: 1.5rem;
+            display: inline-block;
+        }
+
+        .not-found-icon {
+            font-size: 4rem;
+            margin-bottom: 1rem;
+            opacity: 0.7;
+        }
+
+        .info-note {
+            background: #fef9e3;
+            border-radius: 1.2rem;
+            padding: 0.8rem 1.4rem;
+            margin-top: 2rem;
+            font-size: 0.8rem;
+            color: #b45309;
+            border-left: 5px solid #f59e0b;
+            text-align: left;
+            max-width: 90%;
+        }
+
+        footer {
+            font-size: 0.7rem;
+            text-align: center;
+            padding: 1rem;
+            background: #f8fafc;
+            color: #6c7a8e;
+            border-top: 1px solid #eef2f6;
+        }
+
+        button {
+            background: none;
+            border: none;
+        }
+
+        @media (max-width: 520px) {
+            .greeting {
+                font-size: 2.4rem;
+            }
+            .nav-bar {
+                gap: 0.8rem;
+                padding: 0.9rem;
+            }
+            .nav-link {
+                padding: 0.4rem 1rem;
+                font-size: 1rem;
+            }
+            .content-container {
+                padding: 2rem 1.2rem;
+            }
+        }
+    </style>
 </head>
 <body>
 
-    <!-- ============ PRELOADER ============ -->
-    <div id="preloader">
-        <div class="preloader-content">
-            <div class="preloader-glitch" data-text="loyslow">loyslow</div>
-            <div class="preloader-subtitle">developer portfolio</div>
-            <div class="preloader-line"></div>
-            <div class="preloader-click">
-                <span class="preloader-pulse"></span>
-                Нажмите в любом месте, чтобы продолжить
-            </div>
-            <div class="preloader-hint">🎵 Музыка начнёт воспроизводиться автоматически</div>
-        </div>
-        <div class="preloader-particles" id="preloaderParticles"></div>
+<div class="card">
+    <div class="nav-bar">
+        <a href="/hello" class="nav-link" data-route="hello"> ✨ /hello</a>
+        <a href="/bye" class="nav-link" data-route="bye"> 🌙 /bye</a>
+        <a href="/" class="nav-link" data-route="home"> 🏠 Главная</a>
     </div>
 
-    <!-- ============ BACKGROUND ============ -->
-    <div id="background-container">
-        <video id="bg-video" muted loop playsinline></video>
-        <img id="bg-gif" alt="">
-        <canvas id="bg-stranger-things"></canvas>
-        <div class="bg-overlay"></div>
+    <div class="content-container" id="app-root">
+        <!-- динамический контент будет вставлен через JS -->
+        <div class="message-box">Загрузка маршрута...</div>
     </div>
+    <footer>
+        ⚡ Клиентский роутинг | Для работы прямых ссылок /hello и /bye требуется<br>
+        настройка сервера (SPA fallback: перенаправление всех путей на index.html)
+    </footer>
+</div>
 
-    <!-- ============ TOAST CONTAINER ============ -->
-    <div class="toast-container" id="toast-container"></div>
+<script>
+    (function() {
+        // --- Вспомогательные функции для роутинга ---
+        // Нормализуем путь: убираем завершающий слеш, кроме корня, приводим к нижнему регистру (опционально)
+        function normalizePath(path) {
+            if (!path || path === '') return '/';
+            // удаляем query и hash (если вдруг)
+            let cleanPath = path.split('?')[0].split('#')[0];
+            if (cleanPath !== '/' && cleanPath.endsWith('/')) {
+                cleanPath = cleanPath.slice(0, -1);
+            }
+            return cleanPath;
+        }
 
-    <!-- ============ MAIN CONTENT ============ -->
-    <main id="main-content" class="hidden">
-        <div class="container">
+        // Получить текущий путь из window.location
+        function getCurrentPath() {
+            return normalizePath(window.location.pathname);
+        }
 
-            <!-- ===== BIO SECTION ===== -->
-            <section id="bio-section" class="bento-section fade-in-up">
-                <div class="bento-grid bio-grid">
-                    <!-- Avatar Card -->
-                    <div class="bento-card bio-avatar-card" data-tilt>
-                        <div class="avatar-wrapper">
-                            <img id="bio-avatar" src="" alt="Avatar">
-                            <div class="avatar-ring"></div>
-                            <div class="avatar-status"></div>
-                        </div>
-                        <h1 id="bio-name" class="bio-name"></h1>
-                        <p id="bio-username" class="bio-username"></p>
+        // Рендер контента в зависимости от пути
+        function renderPageByPath(path) {
+            const appRoot = document.getElementById('app-root');
+            if (!appRoot) return;
+
+            let title = 'Маршрутизатор';
+            let contentHtml = '';
+
+            // Определяем контент по маршруту
+            if (path === '/hello') {
+                title = 'Приветствие | Hello world!';
+                contentHtml = `
+                    <div class="message-box">
+                        <div class="greeting">👋 Hello world!</div>
+                        <div class="sub">Добро пожаловать на страницу приветствия</div>
+                        <div class="path-badge">📍 ${path}</div>
                     </div>
-
-                    <!-- Info Card -->
-                    <div class="bento-card bio-info-card" data-tilt>
-                        <div class="card-header">
-                            <i class="fas fa-user-astronaut"></i>
-                            <span>Обо мне</span>
-                        </div>
-                        <p id="bio-about" class="bio-about">
-                            <!-- ===== EDIT YOUR BIO HERE ===== -->
-                            Типичный шизофреник, занимающийся всяким бредом в сети интернет. По совместительству администратор & разработчик крупного Minecraft-проекта - AfricaRP.
-                            <!-- ================================ -->
-                        </p>
+                `;
+            } 
+            else if (path === '/bye') {
+                title = 'Прощание | Bye, bye!';
+                contentHtml = `
+                    <div class="message-box">
+                        <div class="greeting">👋 Bye, bye!</div>
+                        <div class="sub">До скорой встречи! Возвращайтесь :)</div>
+                        <div class="path-badge">📍 ${path}</div>
                     </div>
-
-                    <!-- Location Card -->
-                    <div class="bento-card bio-location-card" data-tilt>
-                        <div class="card-header">
-                            <i class="fas fa-map-marker-alt"></i>
-                            <span>Локация</span>
-                        </div>
-                        <div class="location-content">
-                            <!--
-                                ===== FLAG — Inline SVG =====
-                                Works on ALL platforms (Windows, Mac, Linux, mobile)
-                                To change country: replace the SVG below
-                            -->
-                            <div class="flag-svg-wrapper">
-                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 9 6">
-                                    <rect fill="#fff" width="9" height="6"/>
-                                    <rect fill="#0039A6" y="2" width="9" height="4"/>
-                                    <rect fill="#D52B1E" y="4" width="9" height="2"/>
-                                </svg>
-                            </div>
-                            <!-- ============================= -->
-                            <span class="location-text">Russia</span>
-                        </div>
+                `;
+            }
+            else if (path === '/') {
+                title = 'Главная | Hello / Bye';
+                contentHtml = `
+                    <div class="message-box">
+                        <div class="greeting" style="font-size:2.6rem;">🏠 Домашняя страница</div>
+                        <div class="sub">Выберите маршрут в меню:<br> <strong style="background:#eef2ff; padding:0.2rem 0.8rem; border-radius:30px;">/hello</strong> или <strong style="background:#eef2ff; padding:0.2rem 0.8rem; border-radius:30px;">/bye</strong></div>
+                        <div class="path-badge">📍 корневой путь /</div>
                     </div>
-
-                    <!-- Socials Card -->
-                    <div class="bento-card bio-socials-card" data-tilt>
-                        <div class="card-header">
-                            <i class="fas fa-share-alt"></i>
-                            <span>Соц. сети</span>
-                        </div>
-                        <div class="socials-list">
-                            <a href="#" id="social-telegram" class="social-link telegram" target="_blank" rel="noopener">
-                                <i class="fab fa-telegram"></i>
-                                <span>Telegram</span>
-                            </a>
-                            <a href="#" id="social-discord" class="social-link discord" target="_blank" rel="noopener">
-                                <i class="fab fa-discord"></i>
-                                <span>Discord</span>
-                            </a>
-                            <a href="https://github.com/loyslow-dev" id="social-github" class="social-link github" target="_blank" rel="noopener">
-                                <i class="fab fa-github"></i>
-                                <span>GitHub</span>
-                            </a>
+                `;
+            }
+            else {
+                title = '404 — Страница не найдена';
+                contentHtml = `
+                    <div class="message-box">
+                        <div class="not-found-icon">🔍 ❓</div>
+                        <div class="greeting" style="font-size:2.2rem; background:linear-gradient(135deg,#8b5a2b,#b97f44); background-clip:text; -webkit-background-clip:text;">Маршрут не обнаружен</div>
+                        <div class="sub">Путь <code style="background:#eef2ff; padding:0.2rem 0.5rem; border-radius:12px;">${escapeHtml(path)}</code> не соответствует /hello или /bye</div>
+                        <div class="path-badge">❌ неизвестный маршрут</div>
+                        <div class="info-note">
+                            💡 Для перехода используйте навигацию выше или адресную строку: <strong>/hello</strong> или <strong>/bye</strong>
                         </div>
                     </div>
+                `;
+            }
 
-                    <!-- Stats Card -->
-                    <div class="bento-card bio-stats-card" data-tilt>
-                        <div class="card-header">
-                            <i class="fas fa-chart-bar"></i>
-                            <span>GitHub Stats</span>
-                        </div>
-                        <div class="stats-grid">
-                            <div class="stat-item">
-                                <span class="stat-number" id="stat-repos">0</span>
-                                <span class="stat-label">Repos</span>
-                            </div>
-                            <div class="stat-item">
-                                <span class="stat-number" id="stat-followers">0</span>
-                                <span class="stat-label">Followers</span>
-                            </div>
-                            <div class="stat-item">
-                                <span class="stat-number" id="stat-following">0</span>
-                                <span class="stat-label">Following</span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </section>
+            // Обновляем заголовок документа
+            document.title = title;
+            // Плавно обновляем контент с легкой анимацией (через замену innerHTML)
+            appRoot.style.opacity = '0';
+            setTimeout(() => {
+                appRoot.innerHTML = contentHtml;
+                appRoot.style.opacity = '1';
+            }, 20);
+            appRoot.style.transition = 'opacity 0.18s ease';
+            appRoot.style.opacity = '1';
+        }
 
-            <!-- ===== TECH SECTION ===== -->
-            <section id="tech-section" class="bento-section fade-in-up">
-                <div class="section-header">
-                    <h2><i class="fas fa-code"></i> Технологии</h2>
-                    <p>Инструменты и языки, с которыми я работаю</p>
-                </div>
-                <div class="tech-marquee-wrapper">
-                    <div class="tech-marquee" id="tech-marquee"></div>
-                </div>
-            </section>
+        // простая защита от XSS при отображении пути
+        function escapeHtml(str) {
+            return str.replace(/[&<>]/g, function(m) {
+                if (m === '&') return '&amp;';
+                if (m === '<') return '&lt;';
+                if (m === '>') return '&gt;';
+                return m;
+            }).replace(/[\uD800-\uDBFF][\uDC00-\uDFFF]/g, function(c) {
+                return c;
+            });
+        }
 
-            <!-- ===== REPOS SECTION ===== -->
-            <section id="repos-section" class="bento-section fade-in-up">
-                <div class="section-header">
-                    <h2><i class="fas fa-book"></i> Репозитории</h2>
-                    <p>Мои публичные проекты на GitHub</p>
-                </div>
-                <div class="bento-grid repos-grid" id="repos-grid"></div>
-            </section>
+        // --- Навигация без перезагрузки страницы (History API) ---
+        function navigateTo(url, options = { replace: false }) {
+            if (!url || url === '') url = '/';
+            // убедимся что url начинается с '/' для относительности
+            let targetUrl = url.startsWith('/') ? url : '/' + url;
+            const currentPath = getCurrentPath();
+            const newPath = normalizePath(targetUrl);
+            
+            // если путь не изменился, просто обновляем рендер (на случай, если вызвано вручную)
+            if (currentPath === newPath && !options.force) {
+                renderPageByPath(newPath);
+                return;
+            }
+            
+            // используем pushState или replaceState
+            if (options.replace) {
+                window.history.replaceState(null, '', targetUrl);
+            } else {
+                window.history.pushState(null, '', targetUrl);
+            }
+            // обновляем отображение
+            renderPageByPath(getCurrentPath());
+        }
 
-            <!-- ===== PROJECTS SECTION ===== -->
-            <section id="projects-section" class="bento-section fade-in-up">
-                <div class="section-header">
-                    <h2><i class="fas fa-rocket"></i> Проекты</h2>
-                    <p>Проекты, в которых я принимаю участие</p>
-                </div>
-                <div class="bento-grid projects-grid" id="projects-grid"></div>
-            </section>
+        // --- Обработчик кликов по ссылкам с классом nav-link (SPA-переход без перезагрузки) ---
+        function handleLinkClick(event) {
+            const target = event.target.closest('a');  // ищем родительский тег a если клик по вложенному элементу
+            if (!target) return;
+            
+            // проверяем, что ссылка имеет класс nav-link ИЛИ data-route атрибут (для безопасности)
+            const isNavLink = target.classList.contains('nav-link') || target.hasAttribute('data-route');
+            if (!isNavLink) return;
+            
+            const href = target.getAttribute('href');
+            if (!href || href.startsWith('http') || href.startsWith('//') || href === '#') {
+                // внешние ссылки или якоря не обрабатываем
+                return;
+            }
+            
+            // разрешаем стандартное поведение при зажатых модификаторах (ctrl, cmd, alt для открытия в новой вкладке)
+            if (event.metaKey || event.ctrlKey || event.shiftKey || event.altKey) {
+                return;
+            }
+            
+            event.preventDefault();
+            // обрабатываем переход по внутренней ссылке
+            navigateTo(href);
+        }
 
-            <!-- ===== FOOTER ===== -->
-            <footer class="site-footer fade-in-up">
-                <div class="footer-content">
-                    <p>Made with <span class="heart">❤️</span> by <strong>loyslow</strong></p>
-                    <p class="footer-year"></p>
-                </div>
-            </footer>
+        // --- Обработчик кнопки назад/вперед (popstate) ---
+        function onPopState() {
+            const currentPath = getCurrentPath();
+            renderPageByPath(currentPath);
+        }
 
-        </div>
-    </main>
-
-    <!-- ============ MUSIC PLAYER ============ -->
-    <div id="player-mini" class="player-mini">
-        <button id="player-toggle-btn" class="player-toggle-btn" title="Play/Pause">
-            <i class="fas fa-music"></i>
-        </button>
-        <div class="player-mini-visualizer" id="mini-visualizer"></div>
-        <div class="player-expand-hint" id="player-expand-hint">
-            <i class="fas fa-chevron-up"></i>
-        </div>
-    </div>
-
-    <div id="player-full" class="player-full">
-        <div class="player-full-inner">
-            <button id="player-close-btn" class="player-close-btn">
-                <i class="fas fa-chevron-down"></i>
-            </button>
-
-            <!-- Cover Art -->
-            <div class="player-cover-container" id="player-cover-container">
-                <div class="player-cover-placeholder" id="player-cover-placeholder">
-                    <i class="fas fa-music"></i>
-                </div>
-            </div>
-
-            <div class="player-visualizer-container">
-                <canvas id="player-visualizer" width="400" height="60"></canvas>
-            </div>
-
-            <div class="player-track-info">
-                <div class="player-track-name" id="player-track-name">Загрузка...</div>
-                <div class="player-track-artist" id="player-track-artist">—</div>
-            </div>
-
-            <div class="player-timeline">
-                <span id="player-current-time">0:00</span>
-                <input type="range" id="player-seek" class="player-seek" min="0" max="100" value="0" step="0.1">
-                <span id="player-duration">0:00</span>
-            </div>
-
-            <div class="player-controls">
-                <button id="player-prev" class="player-ctrl-btn" title="Previous">
-                    <i class="fas fa-backward-step"></i>
-                </button>
-                <button id="player-play" class="player-ctrl-btn play-btn" title="Play/Pause">
-                    <i class="fas fa-play" id="player-play-icon"></i>
-                </button>
-                <button id="player-next" class="player-ctrl-btn" title="Next">
-                    <i class="fas fa-forward-step"></i>
-                </button>
-            </div>
-
-            <div class="player-volume">
-                <i class="fas fa-volume-up" id="player-volume-icon"></i>
-                <input type="range" id="player-volume" class="player-volume-slider" min="0" max="100" value="50">
-            </div>
-
-            <div class="player-playlist" id="player-playlist"></div>
-        </div>
-    </div>
-
-    <!-- JS Modules -->
-    <script src="js/background.js"></script>
-    <script src="js/bio.js"></script>
-    <script src="js/tech.js"></script>
-    <script src="js/repos.js"></script>
-    <script src="js/projects.js"></script>
-    <script src="js/player.js"></script>
-    <script src="js/easter-eggs.js"></script>
-    <script src="js/preloader.js"></script>
-    <script src="js/app.js"></script>
+        // --- Инициализация приложения: отслеживание событий и первый рендер ---
+        function initRouter() {
+            // первичный рендер на основе текущего URL
+            const initialPath = getCurrentPath();
+            renderPageByPath(initialPath);
+            
+            // подписываемся на клики по документу (делегирование для динамических и статических ссылок)
+            document.addEventListener('click', handleLinkClick);
+            
+            // отслеживаем события браузера (назад/вперед)
+            window.addEventListener('popstate', onPopState);
+            
+            // Доп. элегантность: если вдруг какой-то скрипт вызовет программное изменение URL,
+            // но popstate сработает только при ручном взаимодействии — всё корректно.
+        }
+        
+        // Запускаем роутер после полной загрузки DOM
+        if (document.readyState === 'loading') {
+            document.addEventListener('DOMContentLoaded', initRouter);
+        } else {
+            initRouter();
+        }
+        
+        // Экспортируем вспомогательные методы в глобальный объект для отладки (опционально)
+        window.__router = {
+            navigate: navigateTo,
+            getPath: getCurrentPath,
+            refresh: () => renderPageByPath(getCurrentPath())
+        };
+    })();
+</script>
 </body>
 </html>
