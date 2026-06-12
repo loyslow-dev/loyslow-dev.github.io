@@ -378,7 +378,12 @@ body {
     position: relative;
 }
 
-.social-links a:hover {
+.social-links a i {
+    transition: all 0.3s ease;
+    display: inline-block;
+}
+
+.social-links a:hover i {
     color: #ffffff;
     transform: translateY(-5px) scale(1.1);
     text-shadow: 0 0 15px #ffffff, 0 0 30px #ffffff, 0 0 45px #ffffff;
