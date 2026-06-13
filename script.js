@@ -91,6 +91,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     entryScreen.addEventListener('click', () => {
         entryScreen.style.opacity = '0';
+        entryScreen.style.pointerEvents = 'none';
         entryScreen.style.visibility = 'hidden';
         
         mainContent.classList.add('visible');
@@ -98,7 +99,7 @@ document.addEventListener('DOMContentLoaded', () => {
         bgVideo.play().catch(e => console.error("Video playback failed:", e));
         
         setTimeout(() => typeWriter(descText, 0), 500);
-    });
+    }, { once: true });
 
     document.addEventListener('mousemove', (e) => {
         if (mainContent.classList.contains('visible')) {
