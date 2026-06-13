@@ -77,6 +77,18 @@ document.addEventListener('DOMContentLoaded', () => {
     setInterval(updateClock, 1000);
     updateClock();
 
+    fetch(`https://api.github.com/users/${GITHUB_USERNAME}`)
+        .then(res => res.json())
+        .then(data => {
+            if (data.avatar_url) {
+                avatarImg.src = data.avatar_url;
+            }
+            if (data.login) {
+                usernameEl.textContent = data.login.replace('-dev', '');
+            }
+        })
+        .catch(err => console.error('GitHub fetch failed:', err));
+
     entryScreen.addEventListener('click', () => {
         entryScreen.style.opacity = '0';
         entryScreen.style.visibility = 'hidden';
@@ -86,18 +98,6 @@ document.addEventListener('DOMContentLoaded', () => {
         bgVideo.play().catch(e => console.error("Video playback failed:", e));
         
         setTimeout(() => typeWriter(descText, 0), 500);
-
-        fetch(`https://api.github.com/users/${GITHUB_USERNAME}`)
-            .then(res => res.json())
-            .then(data => {
-                if (data.avatar_url) {
-                    avatarImg.src = data.avatar_url;
-                }
-                if (data.login) {
-                    usernameEl.textContent = data.login.replace('-dev', '');
-                }
-            })
-            .catch(err => console.error('GitHub fetch failed:', err));
     });
 
     document.addEventListener('mousemove', (e) => {
