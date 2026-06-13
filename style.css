@@ -124,7 +124,7 @@ body {
     transform: translateX(-50%) translateY(-50%);
     z-index: -1;
     object-fit: cover;
-    filter: brightness(0.35) blur(6px);
+    filter: brightness(0.55) blur(3px);
 }
 
 #main-content {
